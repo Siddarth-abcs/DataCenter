@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 export const Countrycard = () => {
   const { countryName } = useParams();
@@ -11,7 +10,7 @@ export const Countrycard = () => {
       method: "GET",
       redirect: "follow"
     };
-    
+
     fetch(`https://restcountries.com/v3.1/name/${countryName}`, requestOptions)
       .then((response) => response.json())
       .then((result) => setDatainfo(result[0])) // Since the API returns an array, get the first item
@@ -26,7 +25,6 @@ export const Countrycard = () => {
       }
     }
   }, [datainfo]);
-  
 
   return (
     <div className='mt-16'>
@@ -42,20 +40,20 @@ export const Countrycard = () => {
           <>
             {/* Display country details */}
             {/* Replace 'datainfo.flags.png' with the appropriate property */}
-            <div><img className='h-80' src={datainfo.flags.svg} alt="img"/></div>
+            <div><img className='h-80' src={datainfo.flags && datainfo.flags.svg} alt="img"/></div>
             <div className='mx-16'>
-                <h2 className='text-4xl font-bold'>{datainfo.name.common}</h2>
-            <div className='grid grid-cols-2 grid-rows-4 my-6 gap-1'>
-              <p>Native Name: {datainfo.name.official}</p>
-              <p>Population: {datainfo.population}</p>
-              <p>Region: {datainfo.region}</p>
-              <p>Sub Region: {datainfo.subregion}</p>
-              <p>Capital: {datainfo.capital}</p>
-              <p>Top Level Domain: {datainfo.tld}</p>
-              <p>Currencies: {datainfo.currencies && Object.values(datainfo.currencies).map(currency => currency.name).join(", ")}</p>
-              <p>Languages: {Object.values(datainfo.languages).join(", ")}</p>
-            </div>
-              <p>Border Countries: {Object.values(datainfo.borders).join(", ")}</p>
+              <h2 className='text-4xl font-bold'>{datainfo.name && datainfo.name.common}</h2>
+              <div className='grid grid-cols-2 grid-rows-4 my-6 gap-1'>
+                <p>Native Name: {datainfo.name && datainfo.name.official}</p>
+                <p>Population: {datainfo.population}</p>
+                <p>Region: {datainfo.region}</p>
+                <p>Sub Region: {datainfo.subregion}</p>
+                <p>Capital: {datainfo.capital}</p>
+                <p>Top Level Domain: {datainfo.tld}</p>
+                <p>Currencies: {datainfo.currencies && Object.values(datainfo.currencies).map(currency => currency.name).join(", ")}</p>
+                <p>Languages: {datainfo.languages && Object.values(datainfo.languages).join(", ")}</p>
+              </div>
+              <p>Border Countries: {datainfo.borders && Object.values(datainfo.borders).join(", ")}</p>
               {/* Display border countries */}
               {/* Add other country details as needed */}
             </div>
